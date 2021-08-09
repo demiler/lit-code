@@ -9,7 +9,6 @@
  */
 
 import { html, LitElement } from 'lit';
-import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import style from './rray-editor.css';
 import './prism-lite.mjs';
 import { codeSample } from './codeSample.mjs';
@@ -19,25 +18,26 @@ window.pr = Prism;
 class RrayCode extends LitElement {
   static styles = [ style ];
   static properties = {
-    code: { type: String },
-    grammar: { type: Object },
-    language: { type: String },
+    code:        { type: String },
+    grammar:     { type: Object },
+    language:    { type: String },
+    shadowdom:   { attribute: true },
     linenumbers: { attribute: true },
-    shadowdom: { attribute: true },
   };
 
   get shadowDom() { return this.hasAttribute('shadowdom'); }
 
   constructor() {
     super();
-    this.lastPos = 0;
-    this.closing = [ ']', ')', '}', '\'', '"', '`' ];
-    this.openPair = { '[': ']', '(': ')', '{': '}', '\'': '\'', '"': '"', '`': '`' };
+    this.opening = [ '(', '{', '[', '<', '\'', '"' ];
+    this.closing = [ ')', '}', ']', '>', '\'', '"' ];
 
-    this.code = codeSample.slice(0, 5000);
+    this.code = codeSample.slice(503, 857);
 
-    this.language = 'clike';
+    this.language = 'c';
     this.grammar = Prism.languages[this.language];
+
+    this.history = [];
   }
 
   update(params) {
@@ -47,48 +47,16 @@ class RrayCode extends LitElement {
     }
   }
 
-  _countLines(str) {
-    return (str.match(/\r?\n/g) || []);
-  }
-
-  _stringInsert(str, ins, pos) {
-    return str.substring(0, pos) + ins + str.substring(pos);
-  }
-
   _getElement(id) {
-    return !this.shadowDom ?
-      this.shadowRoot.querySelector(`.rraycode_${id}`)
-      : this.querySelector(`.rraycode_${id}`);
-  }
-
-  _cssGetProp(property, removePX = false) {
-    const value = this.composedStyles.getPropertyValue(property);
-    return removePX ? Number(value.replace('px', '')) : value;
+    return this.shadowDom
+      ? this.querySelector(`.rraycode_${id}`)
+      : this.shadowRoot.querySelector(`.rraycode_${id}`);
   }
 
   firstUpdated() {
-    this.composedStyles = getComputedStyle(this);
-
     this.elTextarea = this._getElement('textarea');
     this.elEditor = this._getElement('rraycode');
-
-    this.lineHeight = this._cssGetProp('line-height', true);
-    this.height = this._cssGetProp('height', true);
     this.updateTextarea();
-  }
-
-
-  renderLines() {
-    if (!this.hasAttribute('linenumbers')) return;
-
-    return html`
-      <div class="rraycode_linenumbers">
-        <div class="rraycode_line">1</div>
-        ${this._countLines(this.code).map((_, i) => html`
-          <div class="rraycode_line">${i + 2}</div>
-        `)}
-      </div>
-    `;
   }
 
   render() {
@@ -96,21 +64,28 @@ class RrayCode extends LitElement {
       ${!this.shadowDom ? html`` : html`<style>${style.cssText}</style>`}
 
       <div class="rraycode rraycode_rraycode">
-        ${this.renderLines()}
+        ${!this.hasAttribute('linenumbers') ? html`` : html`
+          <div class="rraycode_linenumbers">
+            <div class="rraycode_line">1</div>
+            ${this.code.match(/\r?\n/g).map((_, i) => html`
+              <div class="rraycode_line">${i + 2}</div>
+            `)}
+          </div>
+        `}
+
         <textarea class="rraycode_textarea"
                   spellcheck=false
-                  @mouseup=${this.handleClick}
                   @keydown=${this.handleKeys}
                   @input=${this.handleInput}
-                  @scroll=${this.handleScroll}
         ></textarea>
+
         <code class="rraycode_highlight"><pre>
-          ${Prism.tokenize(this.code, this.grammar).map(function untokenize(el) {
+          ${Prism.tokenize(this.code, this.grammar).map(function htmlize(el) {
             if (typeof el === 'string') return html`${el}`;
 
             return html`<span class="token ${el.type} ${el.alias}">${
               Array.isArray(el.content)
-                  ? el.content.map(untokenize)
+                  ? el.content.map(htmlize)
                   : html`${el.content}`
               }</span>`;
           })}
@@ -126,46 +101,54 @@ class RrayCode extends LitElement {
 
   setCursor(pos) {
     if (!this.elTextarea) return;
-    this.lastPos = pos;
     this.elTextarea.setSelectionRange(pos, pos);
   }
 
   handleKeys(e) {
-    const pos = this.elTextarea.selectionStart;
-
-    switch (e.which) {
-      case 9: //tab
-        e.preventDefault();
-        this.code = this._stringInsert(this.code, '  ', pos);
-        this.updateTextarea();
-        this.setCursor(pos + 2);
-        return;
+    switch (e.code) {
+      case 'Tab':   this.handleTabs(e);    break;
+      case 'Enter': this.handleNewLine(e); break;
     }
-
-    const { key } = e;
-
-    if (this.closing.includes(key) && this.code[pos] === key) {
-      e.preventDefault();
-      this.setCursor(pos + 1);
-    }
-    else if (this.openPair[key] && this.code[pos - 1] !== '\\') {
-      this.code = this._stringInsert(this.code, this.openPair[key], pos);
-      this.updateTextarea();
-      this.setCursor(pos);
-    }
-
+    if (this.closing.includes(e.key) || this.closing.includes(e.key))
+      this.handleAutoClose(e);
   }
 
   handleInput({ target }) {
     this.code = target.value;
   }
 
-  handleScroll(e) {
+  createRenderRoot() {
+    return !this.shadowDom ? super.createRenderRoot() : this;
+  }
+
+  handleTabs(e) {
+    e.preventDefault();
+  }
+
+  handleAutoClose({ key }) {
 
   }
 
-  createRenderRoot() {
-    return !this.shadowDom ? super.createRenderRoot() : this;
+  insertCode(pos, text, placeCursor = true) {
+    this.code =
+      this.code.substring(0, pos) + text + this.code.substring(pos)
+    this.updateTextarea();
+    if (placeCursor) this.setCursor(pos + text.length);
+  }
+
+  handleNewLine(e) {
+    e.preventDefault();
+    const selStart = this.elTextarea.selectionStart;
+    const selEnd = this.elTextarea.selectionEnd;
+
+    const indentStart = this.code.lastIndexOf('\n', selStart - 1) + 1;
+    const spaces = (()=>{
+      let pos = indentStart;
+      while (this.code[pos] === ' ' && pos < selEnd) pos++;
+      return pos - indentStart;
+    })();
+
+    this.insertCode(selStart, '\n' + ' '.repeat(spaces));
   }
 }
 
