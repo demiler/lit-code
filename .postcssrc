@@ -1,0 +1,14 @@
+{
+  "plugins": {
+    "postcss-preset-env": {
+      "stage": 3,
+      "features": {
+        "nesting-rules": true
+      }
+    },
+    "postcss-input-range": {},
+    "cssnano": {
+      "preset": "default"
+    }
+  }
+}

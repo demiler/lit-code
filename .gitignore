@@ -1,0 +1,7 @@
+node_modules
+.cache
+.eslintcache
+Thumbs.db
+dist
+*.bak
+*~

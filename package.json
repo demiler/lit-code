@@ -1,0 +1,63 @@
+{
+  "name": "@chalker/rray",
+  "main": "./index.mjs",
+  "version": "0.0.0",
+  "description": "Temporary name",
+  "keywords": [],
+  "repository": "",
+  "private": true,
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=16.3.0"
+  },
+  "browserslist": [
+    "last 3 Chrome versions",
+    "last 2 Firefox versions",
+    "Firefox ESR",
+    "last 2 Edge versions",
+    "last 2 Safari versions",
+    "last 1 Opera version",
+    "not dead"
+  ],
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.14.7",
+    "@babel/plugin-syntax-top-level-await": "^7.14.5",
+    "@nx-js/observer-util": "^4.2.2",
+    "@rollup/plugin-node-resolve": "^13.0.0",
+    "cssnano": "^4.1.11",
+    "eslint": "^7.31.0",
+    "eslint-config-standard": "^16.0.3",
+    "glob": "^7.1.7",
+    "lit": "^2.0.0-rc.2",
+    "pino-pretty": "^5.1.1",
+    "postcss": "^8.3.5",
+    "postcss-input-range": "^4.0.0",
+    "postcss-preset-env": "^6.7.0",
+    "rollup": "^2.52.2",
+    "rollup-plugin-copy": "^3.4.0",
+    "rollup-plugin-livereload": "^2.0.5",
+    "rollup-plugin-minify-html-literals": "^1.2.6",
+    "rollup-plugin-postcss": "^4.0.0",
+    "rollup-plugin-postcss-lit": "^1.1.0",
+    "rollup-plugin-serve": "^1.1.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "stylelint": "^13.13.1",
+    "stylelint-config-recommended": "^5.0.0",
+    "workbox-cli": "^6.1.5"
+  },
+  "scripts": {
+    "test": "npm run lint",
+    "lint": "npm run lint.js && npm run lint.css",
+    "lint.js": "eslint --cache . --ext .js,.mjs",
+    "lint.css": "stylelint frontend/**/*.css",
+    "build-sw": "rm -rf dist && npm run build && workbox generateSW workbox-config.js",
+    "build": "rollup --config rollup.config.prod.mjs",
+    "dev": "rollup --watch --config rollup.config.dev.mjs",
+    "dev-live": "rollup --watch --config rollup.config.dev-live.mjs",
+    "server": "node index.mjs",
+    "server-pretty": "PORT=8080 node index.mjs | pino-pretty -c -t -S",
+    "start": "npm run build && npm run server-pretty"
+  }
+}

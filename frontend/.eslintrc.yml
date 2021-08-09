@@ -1,0 +1,24 @@
+env:
+  browser: false
+  node: false
+rules:
+  no-console: 0
+globals:
+  CustomEvent: readonly
+  Element: readonly
+  FormData: readonly
+  HTMLElement: readonly
+  HTMLIFrameElement: readonly
+  Intl: readonly
+  MutationObserver: readonly
+  WebSocket: readonly
+  cancelAnimationFrame: readonly
+  customElements: readonly
+  document: readonly
+  fetch: readonly
+  history: readonly
+  localStorage: readonly
+  location: readonly
+  navigator: readonly
+  requestAnimationFrame: readonly
+  window: readonly
