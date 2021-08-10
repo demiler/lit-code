@@ -69,7 +69,7 @@ class RrayCode extends LitElement {
         ${!this.hasAttribute('linenumbers') ? html`` : html`
           <div class="rraycode_linenumbers">
             <div class="rraycode_line">1</div>
-            ${this.code.match(/\r?\n/g).map((_, i) => html`
+            ${(this.code.match(/\r?\n/g) || []).map((_, i) => html`
               <div class="rraycode_line">${i + 2}</div>
             `)}
           </div>
@@ -96,9 +96,8 @@ class RrayCode extends LitElement {
     `;
   }
 
-  updateTextarea() {
-    if (!this.elTextarea) return;
-    this.elTextarea.value = this.code;
+  createRenderRoot() {
+    return !this.shadowDom ? super.createRenderRoot() : this;
   }
 
   setCursor(pos) {
@@ -109,6 +108,24 @@ class RrayCode extends LitElement {
   setSelect(from, to) {
     if (!this.elTextarea) return;
     this.elTextarea.setSelectionRange(from, to);
+  }
+
+  getCurrentLineIndent() {
+    const selStart = this.elTextarea.selectionStart;
+    const selEnd = this.elTextarea.selectionEnd;
+
+    const indentStart = this.code.lastIndexOf('\n', selStart - 1) + 1;
+    const spaces = (()=>{
+      let pos = indentStart;
+      while (this.code[pos] === ' ' && pos < selEnd) pos++;
+      return pos - indentStart;
+    })();
+    return ' '.repeat(spaces);
+  }
+
+  updateTextarea() {
+    if (!this.elTextarea) return;
+    this.elTextarea.value = this.code;
   }
 
   insertCode(pos, text, placeCursor = true) {
@@ -124,16 +141,14 @@ class RrayCode extends LitElement {
       case 'Enter':     this.handleNewLine(e);   break;
       case 'Backspace': this.handleBackspace(e); break;
     }
-    if (this.closing.includes(e.key) || this.closing.includes(e.key))
+    if (this.opening.includes(e.key))
       this.handleAutoClose(e);
+    else if (this.closing.includes(e.key))
+      this.handleAutoSkip(e);
   }
 
   handleInput({ target }) {
     this.code = target.value;
-  }
-
-  createRenderRoot() {
-    return !this.shadowDom ? super.createRenderRoot() : this;
   }
 
   handleTabs(e) {
@@ -175,15 +190,14 @@ class RrayCode extends LitElement {
   }
 
   handleBackspace(e) {
-    e.preventDefault();
     const selStart = this.elTextarea.selectionStart;
     const selEnd = this.elTextarea.selectionEnd;
     if (selStart !== selEnd) return;
 
+    e.preventDefault();
     const chunkStart = selStart - this.indent.length;
     const chunkEnd = selStart;
     const chunk = this.code.substring(chunkStart, chunkEnd);
-    console.log(JSON.stringify(chunk), chunk.length);
 
     if (chunk === this.indent) {
       this.code = this.code.substring(0, chunkStart) + this.code.substring(chunkEnd);
@@ -197,23 +211,46 @@ class RrayCode extends LitElement {
     }
   }
 
-  handleAutoClose({ key }) {
+  handleAutoClose(e) {
+    const selStart = this.elTextarea.selectionStart;
+    const selEnd = this.elTextarea.selectionEnd;
+    if (this.code[selStart] === '\'' || this.code[selStart] === '"') {
+      return this.handleAutoSkip(e);
+    }
+    e.preventDefault();
 
+    if (selStart === selEnd) {
+      const opening = e.key;
+      const closing = this.closing[this.opening.indexOf(opening)];
+
+      console.log(this.code.length, selStart);
+      if (opening === '{'
+        && (this.code[selStart] === '\n' || this.code.length === selStart)
+      ) {
+        const lineShift = '\n' + this.getCurrentLineIndent();
+        this.insertCode(selStart, opening + lineShift + this.indent + lineShift + closing);
+        this.setCursor(selStart + lineShift.length + this.indent.length + 1);
+      }
+      else {
+        this.insertCode(selStart, opening + closing);
+        this.setCursor(selStart + 1);
+      }
+    }
+  }
+
+  handleAutoSkip(e) {
+    const selStart = this.elTextarea.selectionStart;
+    console.log(this.code[selStart]);
+
+    if (this.code[selStart] === e.key) {
+      e.preventDefault();
+      this.setCursor(selStart + 1);
+    }
   }
 
   handleNewLine(e) {
     e.preventDefault();
-    const selStart = this.elTextarea.selectionStart;
-    const selEnd = this.elTextarea.selectionEnd;
-
-    const indentStart = this.code.lastIndexOf('\n', selStart - 1) + 1;
-    const spaces = (()=>{
-      let pos = indentStart;
-      while (this.code[pos] === ' ' && pos < selEnd) pos++;
-      return pos - indentStart;
-    })();
-
-    this.insertCode(selStart, '\n' + ' '.repeat(spaces));
+    this.insertCode(this.elTextarea.selectionStart, '\n' + this.getCurrentLineIndent());
   }
 }
 
