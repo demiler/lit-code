@@ -192,7 +192,7 @@ class RrayCode extends LitElement {
   handleBackspace(e) {
     const selStart = this.elTextarea.selectionStart;
     const selEnd = this.elTextarea.selectionEnd;
-    if (selStart !== selEnd) return;
+    if (e.ctrlKey || selStart !== selEnd) return;
 
     e.preventDefault();
     const chunkStart = selStart - this.indent.length;
