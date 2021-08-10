@@ -73,6 +73,11 @@
 
   }
 
+  & .rraycode_textarea::selection {
+    background-color: #b9ecff;
+  }
+
+
   & .rraycode_highlight {
     width: 100%;
     height: 100%;

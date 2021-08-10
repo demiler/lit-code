@@ -223,7 +223,6 @@ class RrayCode extends LitElement {
       const opening = e.key;
       const closing = this.closing[this.opening.indexOf(opening)];
 
-      console.log(this.code.length, selStart);
       if (opening === '{'
         && (this.code[selStart] === '\n' || this.code.length === selStart)
       ) {
@@ -240,7 +239,6 @@ class RrayCode extends LitElement {
 
   handleAutoSkip(e) {
     const selStart = this.elTextarea.selectionStart;
-    console.log(this.code[selStart]);
 
     if (this.code[selStart] === e.key) {
       e.preventDefault();
