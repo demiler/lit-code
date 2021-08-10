@@ -104,6 +104,18 @@ class RrayCode extends LitElement {
     this.elTextarea.setSelectionRange(pos, pos);
   }
 
+  setSelect(from, to) {
+    if (!this.elTextarea) return;
+    this.elTextarea.setSelectionRange(from, to);
+  }
+
+  insertCode(pos, text, placeCursor = true) {
+    this.code =
+      this.code.substring(0, pos) + text + this.code.substring(pos)
+    this.updateTextarea();
+    if (placeCursor) this.setCursor(pos + text.length);
+  }
+
   handleKeys(e) {
     switch (e.code) {
       case 'Tab':   this.handleTabs(e);    break;
@@ -123,17 +135,45 @@ class RrayCode extends LitElement {
 
   handleTabs(e) {
     e.preventDefault();
+    const selStart = this.elTextarea.selectionStart;
+    const selEnd = this.elTextarea.selectionEnd;
+    const indent = '  ';
+
+    if (selStart !== selEnd) { //multiline indent
+      const selLineStart = this.code.lastIndexOf('\n', selStart - 1);
+      const selLineEnd = this.code.indexOf('\n', selEnd);
+
+      let linesInChunk = 0;
+      let codeChunk = this.code.substring(selLineStart, selLineEnd);
+      let lenShift = indent.length;
+
+      if (e.shiftKey) { //Unindent
+        lenShift = -lenShift;
+        linesInChunk = (codeChunk.match(new RegExp('\n' + indent, 'g')) || []).length;
+        codeChunk = codeChunk.replaceAll('\n' + indent, '\n');
+      }
+      else { //Indent
+        linesInChunk = (codeChunk.match(/\n/g) || []).length;
+        codeChunk = codeChunk.replaceAll('\n', '\n' + indent);
+      }
+
+      this.code =
+        this.code.substring(0, selLineStart) +
+        codeChunk +
+        this.code.substring(selLineEnd);
+      this.updateTextarea();
+
+      const newStart = Math.max(selLineStart + 1, selStart + lenShift);
+      const newEnd = selEnd + linesInChunk * lenShift;
+      this.setSelect(newStart, newEnd);
+    }
+    else {
+      this.insertCode(selStart, indent, true);
+    }
   }
 
   handleAutoClose({ key }) {
 
-  }
-
-  insertCode(pos, text, placeCursor = true) {
-    this.code =
-      this.code.substring(0, pos) + text + this.code.substring(pos)
-    this.updateTextarea();
-    if (placeCursor) this.setCursor(pos + text.length);
   }
 
   handleNewLine(e) {
