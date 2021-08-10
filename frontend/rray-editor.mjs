@@ -19,6 +19,7 @@ class RrayCode extends LitElement {
   static styles = [ style ];
   static properties = {
     code:        { type: String },
+    indent:      { type: String },
     grammar:     { type: Object },
     language:    { type: String },
     shadowdom:   { attribute: true },
@@ -33,6 +34,7 @@ class RrayCode extends LitElement {
     this.closing = [ ')', '}', ']', '>', '\'', '"' ];
 
     this.code = codeSample.slice(503, 857);
+    this.indent = '  ';
 
     this.language = 'c';
     this.grammar = Prism.languages[this.language];
@@ -118,8 +120,9 @@ class RrayCode extends LitElement {
 
   handleKeys(e) {
     switch (e.code) {
-      case 'Tab':   this.handleTabs(e);    break;
-      case 'Enter': this.handleNewLine(e); break;
+      case 'Tab':       this.handleTabs(e);      break;
+      case 'Enter':     this.handleNewLine(e);   break;
+      case 'Backspace': this.handleBackspace(e); break;
     }
     if (this.closing.includes(e.key) || this.closing.includes(e.key))
       this.handleAutoClose(e);
@@ -137,7 +140,6 @@ class RrayCode extends LitElement {
     e.preventDefault();
     const selStart = this.elTextarea.selectionStart;
     const selEnd = this.elTextarea.selectionEnd;
-    const indent = '  ';
 
     if (selStart !== selEnd) { //multiline indent
       const selLineStart = this.code.lastIndexOf('\n', selStart - 1);
@@ -145,16 +147,16 @@ class RrayCode extends LitElement {
 
       let linesInChunk = 0;
       let codeChunk = this.code.substring(selLineStart, selLineEnd);
-      let lenShift = indent.length;
+      let lenShift = this.indent.length;
 
       if (e.shiftKey) { //Unindent
         lenShift = -lenShift;
-        linesInChunk = (codeChunk.match(new RegExp('\n' + indent, 'g')) || []).length;
-        codeChunk = codeChunk.replaceAll('\n' + indent, '\n');
+        linesInChunk = (codeChunk.match(new RegExp('\n' + this.indent, 'g')) || []).length;
+        codeChunk = codeChunk.replaceAll('\n' + this.indent, '\n');
       }
       else { //Indent
         linesInChunk = (codeChunk.match(/\n/g) || []).length;
-        codeChunk = codeChunk.replaceAll('\n', '\n' + indent);
+        codeChunk = codeChunk.replaceAll('\n', '\n' + this.indent);
       }
 
       this.code =
@@ -168,7 +170,30 @@ class RrayCode extends LitElement {
       this.setSelect(newStart, newEnd);
     }
     else {
-      this.insertCode(selStart, indent, true);
+      this.insertCode(selStart, this.indent, true);
+    }
+  }
+
+  handleBackspace(e) {
+    e.preventDefault();
+    const selStart = this.elTextarea.selectionStart;
+    const selEnd = this.elTextarea.selectionEnd;
+    if (selStart !== selEnd) return;
+
+    const chunkStart = selStart - this.indent.length;
+    const chunkEnd = selStart;
+    const chunk = this.code.substring(chunkStart, chunkEnd);
+    console.log(JSON.stringify(chunk), chunk.length);
+
+    if (chunk === this.indent) {
+      this.code = this.code.substring(0, chunkStart) + this.code.substring(chunkEnd);
+      this.updateTextarea();
+      this.setCursor(chunkStart);
+    }
+    else {
+      this.code = this.code.substring(0, selStart - 1) + this.code.substring(selStart);
+      this.updateTextarea();
+      this.setCursor(selStart - 1);
     }
   }
 
