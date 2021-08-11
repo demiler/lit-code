@@ -1,13 +1,12 @@
 {
   "name": "rray-code",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Simple web editor created with web components",
   "license": "MIT",
   "repository": "demiler/rray-code",
   "author": "demiler",
-  "main": "src/rray-code",
-  "type": "module",
-  "private": false,
+  "main": "build/rray-code.min.mjs",
+  "module": "build/rray-code.module.mjs",
   "files": [
     "build/rray-code.min.mjs",
     "build/rray-code.module.mjs"
