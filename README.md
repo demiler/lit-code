@@ -1,6 +1,6 @@
 # rray-code
 Simple browser code editor for small code chunks.  
-Written with web-components and lit librarry.  
+Written with web-components and [lit](https://lit.dev/) library.  
 Inspired by [CodeFlask](https://github.com/kazzkiq/CodeFlask).  
 
 # Features
@@ -13,6 +13,7 @@ Inspired by [CodeFlask](https://github.com/kazzkiq/CodeFlask).
 ```
 npm i rray-code
 ```
+Requires lit library
 
 # Usage
 Import it like this
@@ -54,6 +55,7 @@ To get any code updates use `@update` as event listener. That will proved you wi
     }
 ></rray-code>
 ```
+Or you can grab code with `.getCode()`
 
 # Styling
 `rray-code` by default support `js`, `clike`, `html` and `css` hightlight.
@@ -103,4 +105,43 @@ import './my-ver-of-prism-with-cpp.js';
 }
 .rraycode .token.type { color: red; }
 .rraycode .token.template { color: yellow; }
+```
+
+# Example
+```js
+import { html, css, LitElement } from 'lit';
+import 'rray-code';
+
+class JsCodePlayground extends LitElement {
+  static styles = css`
+    pre, rray-code {
+      max-height: 300px;
+      border-radius: 8px;
+      border: 2px solid #eee;
+    }
+  `;
+
+  static properties = {
+    output: { type: String }
+  };
+
+  render() {
+    return html`
+      <rray-code linenumbers language='js'></rray-code>
+      <button @click=${this.runCode}>Run code</button>
+      <pre id="output">${this.output}</pre>
+    `;
+  }
+
+  runCode() {
+    const oldLog = console.log;
+    console.log = (...args) => { this.output += args.join(' ') + '\n'; }
+    this.output = '';
+    const code = this.shadowRoot.querySelector('rray-code').getCode();
+    eval(code); //eval is used only for demonstration purposes
+    console.log = oldLog;
+  }
+};
+
+customElements.define('js-code-playground', JsCodePlayground);
 ```

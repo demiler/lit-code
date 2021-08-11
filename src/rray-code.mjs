@@ -27,8 +27,8 @@ class RrayCode extends LitElement {
 
   constructor() {
     super();
-    this.opening = [ '(', '{', '[', '<', '\'', '"' ];
-    this.closing = [ ')', '}', ']', '>', '\'', '"' ];
+    this.opening = [ '(', '{', '[', '\'', '"' ];
+    this.closing = [ ')', '}', ']', '\'', '"' ];
 
     this.code = '';
     this.indent = '  ';

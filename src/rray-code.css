@@ -60,6 +60,7 @@
 }
 
 .rraycode {
+  border-radius: inherit;
   max-height: inherit;
   max-width: inherit;
   overflow: auto;
