@@ -1,6 +1,6 @@
 {
   "name": "rray-code",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Simple web editor created with web components",
   "license": "MIT",
   "repository": "demiler/rray-code",
@@ -18,9 +18,9 @@
     "highlight"
   ],
   "devDependencies": {
+    "lit": "^2.0.0-rc.2",
     "@rollup/plugin-node-resolve": "^13.0.0",
     "glob": "^7.1.7",
-    "lit": "^2.0.0-rc.2",
     "postcss": "^8.3.5",
     "postcss-input-range": "^4.0.0",
     "postcss-preset-env": "^6.7.0",
