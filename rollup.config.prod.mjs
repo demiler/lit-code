@@ -2,13 +2,24 @@ import { nodeResolve } from '@rollup/plugin-node-resolve';
 import postcss from 'rollup-plugin-postcss';
 import postcssLit from 'rollup-plugin-postcss-lit';
 import minifyHTML from 'rollup-plugin-minify-html-literals';
+import { terser } from 'rollup-plugin-terser';
 
 export default {
-  input: 'src/index.mjs',
-  output: {
-    file: 'dist/index.mjs',
-    format: 'es'
-  },
+  input: 'src/rray-code.mjs',
+  output: [
+    {
+      sourcemap: false,
+      format: 'umd',
+      name: 'rray-code',
+      file: 'build/rray-code.min.mjs',
+    },
+    {
+      sourcemap: false,
+      format: 'es',
+      name: 'rray-code',
+      file: 'build/rray-code.module.mjs',
+    }
+  ],
   plugins: [
     postcss({
       inject: false,
@@ -28,5 +39,6 @@ export default {
         }
       }
     }),
+    terser(),
   ],
 };

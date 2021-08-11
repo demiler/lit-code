@@ -1,6 +1,6 @@
 {
   "name": "rray-code",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Simple web editor created with web components",
   "license": "MIT",
   "repository": "demiler/rray-code",
@@ -9,8 +9,8 @@
   "type": "module",
   "private": false,
   "files": [
-    "src/rray-code.mjs",
-    "src/rray-code.css"
+    "build/rray-code.min.mjs",
+    "build/rray-code.module.mjs"
   ],
   "keywords": [
     "editor",
@@ -29,7 +29,8 @@
     "rollup-plugin-minify-html-literals": "^1.2.6",
     "rollup-plugin-postcss": "^4.0.0",
     "rollup-plugin-postcss-lit": "^1.1.0",
-    "rollup-plugin-serve": "^1.1.0"
+    "rollup-plugin-serve": "^1.1.0",
+    "rollup-plugin-terser": "^7.0.2"
   },
   "scripts": {
     "dev": "rollup --watch --config rollup.config.dev.mjs",
