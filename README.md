@@ -1,3 +1,4 @@
+[![npm version](https://badge.fury.io/js/rray-code.svg)](https://badge.fury.io/js/rray-code)
 [![Build Status](https://travis-ci.com/Demiler/rray-code.svg?branch=master)](https://travis-ci.com/Demiler/rray-code)
 
 # rray-code
