@@ -41,8 +41,11 @@ class RrayCode extends LitElement {
     super.update(params);
     if (params.has('language')) {
       const newGrammar = Prism.languages[this.language.toLowerCase()];
-      if (newGrammar === undefined) throw new Error('Unsupported Prism language');
-      else this.grammar = newGrammar
+      if (newGrammar === undefined) {
+        throw new Error('Unsupported Prism language');
+        this.language = params.get('language');
+      }
+      else this.grammar = newGrammar;
     }
   }
 
@@ -199,19 +202,33 @@ class RrayCode extends LitElement {
     if (e.ctrlKey || selStart !== selEnd) return;
 
     e.preventDefault();
-    const chunkStart = selStart - this.indent.length;
-    const chunkEnd = selStart;
-    const chunk = this.code.substring(chunkStart, chunkEnd);
 
-    if (chunk === this.indent) {
-      this.code = this.code.substring(0, chunkStart) + this.code.substring(chunkEnd);
-      this.updateTextarea();
-      this.setCursor(chunkStart);
-    }
-    else {
-      this.code = this.code.substring(0, selStart - 1) + this.code.substring(selStart);
+    //remove brackets pairs
+    const prevSymbol = this.code[selStart - 1];
+    const curSymbol = this.code[selStart];
+    const isInPairs = this.opening.includes(prevSymbol) && this.closing.includes(curSymbol);
+    const isPair = isInPairs && this.closing[this.opening.indexOf(prevSymbol)] === curSymbol;
+
+    if (isInPairs && isPair) {
+      this.code = this.code.substring(0, selStart - 1) + this.code.substring(selStart + 1);
       this.updateTextarea();
       this.setCursor(selStart - 1);
+    }
+    else { //remove indent
+      const chunkStart = selStart - this.indent.length;
+      const chunkEnd = selStart;
+      const chunk = this.code.substring(chunkStart, chunkEnd);
+
+      if (chunk === this.indent) {
+        this.code = this.code.substring(0, chunkStart) + this.code.substring(chunkEnd);
+        this.updateTextarea();
+        this.setCursor(chunkStart);
+      }
+      else {
+        this.code = this.code.substring(0, selStart - 1) + this.code.substring(selStart);
+        this.updateTextarea();
+        this.setCursor(selStart - 1);
+      }
     }
   }
 
