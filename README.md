@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/Demiler/rray-code.svg?branch=master)](https://travis-ci.com/Demiler/rray-code)
+
 # rray-code
 Simple browser code editor for small code chunks.  
 Written with web-components and [lit](https://lit.dev/) library.  
