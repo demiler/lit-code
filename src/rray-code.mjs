@@ -23,7 +23,7 @@ class RrayCode extends LitElement {
     linenumbers: { attribute: true },
   };
 
-  get shadowDom() { return this.hasAttribute('noshadow'); }
+  get shadowDom() { return !this.hasAttribute('noshadow'); }
 
   constructor() {
     super();
@@ -51,19 +51,19 @@ class RrayCode extends LitElement {
 
   _getElement(id) {
     return this.shadowDom
-      ? this.querySelector(`.rraycode_${id}`)
-      : this.shadowRoot.querySelector(`.rraycode_${id}`);
+      ? this.shadowRoot.querySelector(`.rraycode_${id}`)
+      : this.querySelector(`.rraycode_${id}`);
   }
 
   firstUpdated() {
     this.elTextarea = this._getElement('textarea');
-    this.elEditor = this._getElement('rraycode');
+    this.elContainer = this._getElement('rraycode');
     this.updateTextarea();
   }
 
   render() {
     return html`
-      ${!this.shadowDom ? html`` : html`<style>${style.cssText}</style>`}
+      ${this.shadowDom ? html`` : html`<style>${style.cssText}</style>`}
 
       <div class="rraycode rraycode_rraycode" ?default=${!this.hasAttribute('mycolors')}>
         ${!this.hasAttribute('linenumbers') ? html`` : html`
@@ -101,16 +101,14 @@ class RrayCode extends LitElement {
   }
 
   createRenderRoot() {
-    return !this.shadowDom ? super.createRenderRoot() : this;
+    return this.shadowDom ? super.createRenderRoot() : this;
   }
 
   setCursor(pos) {
-    if (!this.elTextarea) return;
     this.elTextarea.setSelectionRange(pos, pos);
   }
 
   setSelect(from, to) {
-    if (!this.elTextarea) return;
     this.elTextarea.setSelectionRange(from, to);
   }
 
@@ -119,7 +117,7 @@ class RrayCode extends LitElement {
     const selEnd = this.elTextarea.selectionEnd;
 
     const indentStart = this.code.lastIndexOf('\n', selStart - 1) + 1;
-    const spaces = (()=>{
+    const spaces = (() => {
       let pos = indentStart;
       while (this.code[pos] === ' ' && pos < selEnd) pos++;
       return pos - indentStart;
@@ -141,16 +139,24 @@ class RrayCode extends LitElement {
     if (placeCursor) this.setCursor(pos + text.length);
   }
 
+  replaceCode(posFrom, posTo, text = '', placeCursor = true) {
+    this.code =
+      this.code.substring(0, posFrom) + text + this.code.substring(posTo);
+    this.updateTextarea();
+    if (placeCursor) this.setCursor(posFrom + text.length);
+  }
+
   handleKeys(e) {
     switch (e.code) {
       case 'Tab':       this.handleTabs(e);      break;
       case 'Enter':     this.handleNewLine(e);   break;
       case 'Backspace': this.handleBackspace(e); break;
+      default:
+        if (this.opening.includes(e.key))
+          this.handleAutoClose(e);
+        else if (this.closing.includes(e.key))
+          this.handleAutoSkip(e);
     }
-    if (this.opening.includes(e.key))
-      this.handleAutoClose(e);
-    else if (this.closing.includes(e.key))
-      this.handleAutoSkip(e);
   }
 
   handleInput({ target }) {
@@ -181,11 +187,7 @@ class RrayCode extends LitElement {
         codeChunk = codeChunk.replaceAll('\n', '\n' + this.indent);
       }
 
-      this.code =
-        this.code.substring(0, selLineStart) +
-        codeChunk +
-        this.code.substring(selLineEnd);
-      this.updateTextarea();
+      this.replaceCode(selLineStart, selLineEnd, codeChunk, false);
 
       const newStart = Math.max(selLineStart + 1, selStart + lenShift);
       const newEnd = selEnd + linesInChunk * lenShift;
@@ -207,28 +209,18 @@ class RrayCode extends LitElement {
     const prevSymbol = this.code[selStart - 1];
     const curSymbol = this.code[selStart];
     const isInPairs = this.opening.includes(prevSymbol) && this.closing.includes(curSymbol);
-    const isPair = isInPairs && this.closing[this.opening.indexOf(prevSymbol)] === curSymbol;
+    const isPair = this.closing[this.opening.indexOf(prevSymbol)] === curSymbol;
 
     if (isInPairs && isPair) {
-      this.code = this.code.substring(0, selStart - 1) + this.code.substring(selStart + 1);
-      this.updateTextarea();
-      this.setCursor(selStart - 1);
+      this.replaceCode(selStart - 1, selStart + 1);
     }
     else { //remove indent
       const chunkStart = selStart - this.indent.length;
       const chunkEnd = selStart;
       const chunk = this.code.substring(chunkStart, chunkEnd);
 
-      if (chunk === this.indent) {
-        this.code = this.code.substring(0, chunkStart) + this.code.substring(chunkEnd);
-        this.updateTextarea();
-        this.setCursor(chunkStart);
-      }
-      else {
-        this.code = this.code.substring(0, selStart - 1) + this.code.substring(selStart);
-        this.updateTextarea();
-        this.setCursor(selStart - 1);
-      }
+      if (chunk === this.indent) this.replaceCode(chunkStart, chunkEnd);
+      else this.replaceCode(selStart - 1, selStart);
     }
   }
 
@@ -270,6 +262,8 @@ class RrayCode extends LitElement {
   handleNewLine(e) {
     e.preventDefault();
     this.insertCode(this.elTextarea.selectionStart, '\n' + this.getCurrentLineIndent());
+    if (this.elTextarea.selectionStart === this.code.length)
+      this.elContainer.scrollTop = this.elContainer.scrollHeight;
   }
 }
 
