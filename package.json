@@ -3,7 +3,7 @@
   "version": "0.0.3",
   "description": "Simple web editor created with web components",
   "license": "MIT",
-  "repository": "demier/rray-code",
+  "repository": "demiler/rray-code",
   "author": "demiler",
   "main": "src/rray-code",
   "type": "module",
