@@ -1,17 +1,22 @@
 {
-  "name": "rraycode",
-  "version": "0.0.1",
+  "name": "rray-code",
+  "version": "0.0.2",
   "description": "Simple web editor created with web components",
   "license": "MIT",
+  "repository": "demier/rray-code",
+  "author": "demiler",
+  "main": "src/rray-code",
+  "type": "module",
+  "private": false,
+  "files": [
+    "src/rray-code.mjs",
+    "src/rray-code.css"
+  ],
   "keywords": [
     "editor",
     "web components",
     "highlight"
   ],
-  "repository": "demier/rray-code",
-  "author": "demiler",
-  "main": "src/rray",
-  "private": false,
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.0.0",
     "glob": "^7.1.7",

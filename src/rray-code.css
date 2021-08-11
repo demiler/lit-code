@@ -23,6 +23,15 @@
   --scroll-track-color: #aaa;
   --scroll-thumb-color: #eee;
 
+  --hl-color-string:      #00ae22;
+  --hl-color-function:    #004eff;
+  --hl-color-number:      #dd9031;
+  --hl-color-operator:    #5a5a5a;
+  --hl-color-class-name:  #78c3ca;
+  --hl-color-punctuation: #4a4a4a;
+  --hl-color-keyword:     #8500ff;
+  --hl-color-comment:     #aaa;
+
   & > .rraycode {
     --font-family: inherit;
     --font-size: inherit;
@@ -38,6 +47,15 @@
     --lines-text-color: inherit;
     --scroll-track-color: inherit;
     --scroll-thumb-color: inherit;
+
+    --hl-color-string:      inherit;
+    --hl-color-function:    inherit;
+    --hl-color-number:      inherit;
+    --hl-color-operator:    inherit;
+    --hl-color-class-name:  inherit;
+    --hl-color-punctuation: inherit;
+    --hl-color-keyword:     inherit;
+    --hl-color-comment:     inherit;
   }
 }
 
@@ -134,14 +152,12 @@
   }
 }
 
-.rraycode[default] .token.macro :is(.directive-hash, .directive)
-                             { color: #c24848; }
-.rraycode[default] .token.string      { color: #00ae22; }
-.rraycode[default] .token.function    { color: #004eff; }
-.rraycode[default] .token.number      { color: #dd9031; }
-.rraycode[default] .token.operator    { color: #5a5a5a; }
-.rraycode[default] .token.class-name  { color: #78c3ca; }
-.rraycode[default] .token.punctuation { color: #4a4a4a; }
-.rraycode[default] .token.keyword     { color: #8500ff; }
-.rraycode[default] .token.type        { color: #288b10; }
-.rraycode[default] .token.comment     { color: #aaa; }
+.rraycode[default] .token.string      { color: var(--hl-color-string);      }
+.rraycode[default] .token.function    { color: var(--hl-color-function);    }
+.rraycode[default] .token.number      { color: var(--hl-color-number);      }
+.rraycode[default] .token.operator    { color: var(--hl-color-operator);    }
+.rraycode[default] .token.class-name  { color: var(--hl-color-class-name);  }
+.rraycode[default] .token.punctuation { color: var(--hl-color-punctuation); }
+.rraycode[default] .token.keyword     { color: var(--hl-color-keyword);     }
+.rraycode[default] .token.comment     { color: var(--hl-color-comment);     }
+
