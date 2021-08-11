@@ -1,51 +1,48 @@
 /**
  * Experimental editor on web components
  * @module components/rray-editor
- * @param { attribute } shadowdom Removes shadow dom from web component
+ * @param { attribute } noshadow Removes shadow dom from web component
  * @param { attribute } linenumber Adds linenumber
+ * @param { attribute } mycolors Disable included highlight colors for prism
  * @param { string } [code] Code inside of editor
  * @param { string } [language='clike'] Used lanaguage
  * @param { object } [grammar] Prism language object
  */
 
 import { html, LitElement } from 'lit';
-import style from './rray-editor.css';
-import './prism-lite.mjs';
-import { codeSample } from './codeSample.mjs';
-
-window.pr = Prism;
+import style from './rray-code.css';
+import 'prismjs';
 
 class RrayCode extends LitElement {
   static styles = [ style ];
   static properties = {
     code:        { type: String },
-    indent:      { type: String },
     grammar:     { type: Object },
     language:    { type: String },
-    shadowdom:   { attribute: true },
+    noshadow:   { attribute: true },
     linenumbers: { attribute: true },
   };
 
-  get shadowDom() { return this.hasAttribute('shadowdom'); }
+  get shadowDom() { return this.hasAttribute('noshadow'); }
 
   constructor() {
     super();
     this.opening = [ '(', '{', '[', '<', '\'', '"' ];
     this.closing = [ ')', '}', ']', '>', '\'', '"' ];
 
-    this.code = codeSample.slice(503, 857);
+    this.code = '';
     this.indent = '  ';
 
-    this.language = 'c';
+    this.language = 'clike';
     this.grammar = Prism.languages[this.language];
-
-    this.history = [];
   }
 
   update(params) {
     super.update(params);
     if (params.has('language')) {
-      this.grammar = Prism.languages[this.language.toLowerCase()];
+      const newGrammar = Prism.languages[this.language.toLowerCase()];
+      if (newGrammar === undefined) throw new Error('Unsupported Prism language');
+      else this.grammar = newGrammar
     }
   }
 
@@ -65,7 +62,7 @@ class RrayCode extends LitElement {
     return html`
       ${!this.shadowDom ? html`` : html`<style>${style.cssText}</style>`}
 
-      <div class="rraycode rraycode_rraycode">
+      <div class="rraycode rraycode_rraycode" ?default=${!this.hasAttribute('mycolors')}>
         ${!this.hasAttribute('linenumbers') ? html`` : html`
           <div class="rraycode_linenumbers">
             <div class="rraycode_line">1</div>
@@ -94,6 +91,10 @@ class RrayCode extends LitElement {
         </pre></code>
       </div>
     `;
+  }
+
+  getCode() {
+    return this.code;
   }
 
   createRenderRoot() {
@@ -126,6 +127,8 @@ class RrayCode extends LitElement {
   updateTextarea() {
     if (!this.elTextarea) return;
     this.elTextarea.value = this.code;
+
+    this.dispatchEvent(new CustomEvent('update', { detail: this.code }));
   }
 
   insertCode(pos, text, placeCursor = true) {
@@ -149,6 +152,7 @@ class RrayCode extends LitElement {
 
   handleInput({ target }) {
     this.code = target.value;
+    this.dispatchEvent(new CustomEvent('update', { detail: this.code }));
   }
 
   handleTabs(e) {
