@@ -2,24 +2,12 @@
 [![Build Status](https://travis-ci.com/Demiler/rray-code.svg?branch=master)](https://travis-ci.com/Demiler/rray-code)
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/rray-code)
 
-<!--
-```
-<custom-element-demo>
-  <template>
-    <link rel="import" href="./src/index.html">
-    <next-code-block></next-code-block>
-  </template>
-</custom-element-demo>
-```
--->
-```html
-<rray-code></rray-code>
-```
-
 # rray-code
 Simple browser code editor for small code chunks.  
 Written with web-components and [lit](https://lit.dev/) library.  
 Inspired by [CodeFlask](https://github.com/kazzkiq/CodeFlask).  
+
+[DEMO](https://www.webcomponents.org/element/rray-code/demo/build/index.html)
 
 # Features
 + Web component
