@@ -32,10 +32,9 @@ Use it like any other custom element! Bare editor
 ```
 
 ### options
-rray-code has several options:
-+ `linenumbers` { attribute } - add line numbers
-+ `noshadow` { attribute } - disables element's shadow-dom so you can sepcify your own colorscheme
-+ `mycolors` { attribute } - disables buildin theme for highlight
++ `linenumbers` - add line numbers
++ `noshadow` - disables element's shadow-dom so you can sepcify your own colorscheme
++ `mycolors` - disables buildin theme for highlight
 + `code` - set pre existing code
 + `language` - set language (must exists in Prism package)
 + `grammar` - grammar for you language (sets automaticaly with any change of `language`);
