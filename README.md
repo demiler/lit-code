@@ -7,7 +7,7 @@ Simple browser code editor for small code chunks.
 Written with web-components and [lit](https://lit.dev/) library.  
 Inspired by [CodeFlask](https://github.com/kazzkiq/CodeFlask).  
 
-[DEMO](https://www.webcomponents.org/element/rray-code/demo/build/index.html)
+[DEMO](https://ps543.csb.app/)
 
 # Features
 + Web component
