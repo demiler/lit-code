@@ -9,9 +9,21 @@
   <script type="module" src="/index.mjs" defer></script>
 </head>
 <body>
-  <rray-code
-      linenumbers
-      shadowdom
-    ></rray-code>
+  <style>
+    body, html { height: 100%; width: 100%; }
+    body { 
+      background-color: #222;
+      margin: 0;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    #editor {
+      border-radius: 8px;
+      width: 80%;
+      height: 80%;
+    }
+  </style>
+  <rray-code id='editor' linenumbers></rray-code>
 </body>
 </html>
+
