@@ -1,6 +1,6 @@
 {
   "name": "rray-code",
-  "version": "0.1.0",
+  "version": "0.0.10",
   "description": "Simple web editor created with web components",
   "license": "MIT",
   "repository": "demiler/rray-code",
@@ -17,7 +17,6 @@
     "highlight"
   ],
   "devDependencies": {
-    "lit": "^2.0.0-rc.2",
     "@rollup/plugin-node-resolve": "^13.0.0",
     "glob": "^7.1.7",
     "postcss": "^8.3.5",
@@ -36,6 +35,7 @@
     "build": "rollup --config rollup.config.prod.mjs"
   },
   "dependencies": {
+    "lit": "^2.0.0-rc.2",
     "prismjs": "^1.24.1"
   }
 }
