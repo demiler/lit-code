@@ -170,12 +170,13 @@ class RrayCode extends LitElement {
     const selEnd = this.elTextarea.selectionEnd;
 
     if (selStart !== selEnd) { //multiline indent
-      const selLineStart = this.code.lastIndexOf('\n', selStart - 1);
-      const selLineEnd = this.code.indexOf('\n', selEnd);
+      const selLineStart = Math.max(0, this.code.lastIndexOf('\n', selStart - 1));
+      const selLineEnd = Math.max(this.code.indexOf('\n', selEnd), selEnd);
 
       let linesInChunk = 0;
       let codeChunk = this.code.substring(selLineStart, selLineEnd);
       let lenShift = this.indent.length;
+      if (selLineStart === 0) codeChunk = '\n' + codeChunk;
 
       if (e.shiftKey) { //Unindent
         lenShift = -lenShift;
@@ -187,6 +188,7 @@ class RrayCode extends LitElement {
         codeChunk = codeChunk.replaceAll('\n', '\n' + this.indent);
       }
 
+      if (selLineStart === 0) codeChunk = codeChunk.replace(/^\n/, '');
       this.replaceCode(selLineStart, selLineEnd, codeChunk, false);
 
       const newStart = Math.max(selLineStart + 1, selStart + lenShift);

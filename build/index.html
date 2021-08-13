@@ -8,6 +8,15 @@
   <script type="module" src="./rray-code.min.mjs" defer></script>
 </head>
 <body>
-  <rray-code linenumbers></rray-code>
+<rray-code linenumbers="" language="js" code="function fibonacci(len) {
+  const fib = [0, 1];
+  
+  for (let i = 2; i < len; i++) {
+    fib[i] = fib[i - 2] + fib[i - 1];
+  }
+  return fib;
+}
+
+console.log(fibonacci(10));"></rray-code>
 </body>
 </html>
