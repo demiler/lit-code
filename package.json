@@ -1,6 +1,6 @@
 {
   "name": "rray-code",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Simple web editor created with web components",
   "license": "MIT",
   "repository": "demiler/rray-code",
