@@ -4,6 +4,7 @@
   "description": "Simple web editor created with web components",
   "license": "MIT",
   "repository": "demiler/lit-code",
+  "homepage": "https://lit-code.firebaseapp.com/",
   "author": "demiler",
   "main": "build/lit-code.min.mjs",
   "module": "build/lit-code.module.mjs",

@@ -11,6 +11,8 @@ Inspired by [CodeFlask](https://github.com/kazzkiq/CodeFlask).
 
 [DEMO](https://ps543.csb.app/)
 
+![preview](preview.png)
+
 # Features
 + Web component
 + Keeps your last line indentetion
