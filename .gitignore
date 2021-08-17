@@ -6,3 +6,6 @@ dist
 *.bak
 *~
 github\.key*
+.firebase*
+.firebase/**
+firebase.json

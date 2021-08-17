@@ -1,6 +1,6 @@
 {
   "name": "lit-code",
-  "version": "0.0.15",
+  "version": "0.1.0",
   "description": "Simple web editor created with web components",
   "license": "MIT",
   "repository": "demiler/lit-code",
@@ -36,7 +36,8 @@
   },
   "scripts": {
     "dev": "rollup --watch --config rollup.config.dev.mjs",
-    "build": "rollup --config rollup.config.prod.mjs"
+    "build": "rollup --config rollup.config.prod.mjs",
+    "site": "rollup --config rollup.config.site.mjs"
   },
   "dependencies": {
     "lit": "^2.0.0-rc.2",

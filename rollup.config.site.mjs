@@ -6,21 +6,13 @@ import { terser } from 'rollup-plugin-terser';
 import svg from 'rollup-plugin-svg'
 
 export default {
-  input: 'src/lit-code.mjs',
-  output: [
-    {
-      sourcemap: false,
-      format: 'umd',
-      name: 'lit-code',
-      file: 'build/lit-code.min.mjs',
-    },
-    {
-      sourcemap: false,
-      format: 'es',
-      name: 'lit-code',
-      file: 'build/lit-code.module.mjs',
-    }
-  ],
+  input: 'src/index.mjs',
+  output: {
+    sourcemap: false,
+    format: 'umd',
+    name: 'lit-code',
+    file: 'public/index.mjs',
+  },
   plugins: [
     postcss({
       inject: false,

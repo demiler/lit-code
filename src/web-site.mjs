@@ -29,7 +29,7 @@ class WebSite extends LitElement {
 
   render() {
     return html`
-      <a id="corner" href="https://github.com/demiler">
+      <a id="corner" href="https://github.com/demiler/lit-code">
         <span id="ghlogo">${unsafeHTML(ghLogo)}</span>
       </a>
       <div id="header">
