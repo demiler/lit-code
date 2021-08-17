@@ -37,7 +37,7 @@
 
 }
 
-.rraycode {
+.litcode {
   border-radius: inherit;
   height: 100%;
   max-height: inherit;
@@ -52,7 +52,7 @@
   font-family: var(--font-family);
   font-size: var(--font-size);
 
-  & :is(.rraycode_textarea, .rraycode_highlight) {
+  & :is(.litcode_textarea, .litcode_highlight) {
     grid-column: 1/3;
     grid-row: 1;
     box-sizing: border-box;
@@ -62,16 +62,16 @@
     height: calc(var(--height) + 100% - 4 * var(--line-height));
   }
 
-  & .rraycode_linenumbers ~ :is(.rraycode_textarea, .rraycode_highlight) {
+  & .litcode_linenumbers ~ :is(.litcode_textarea, .litcode_highlight) {
     grid-column: 2;
     grid-row: 1;
   }
 
-  & :is(.rraycode_textarea, .rraycode_linenumbers, .rraycode_highlight) {
+  & :is(.litcode_textarea, .litcode_linenumbers, .litcode_highlight) {
     padding: 4px;
   }
 
-  & .rraycode_linenumbers {
+  & .litcode_linenumbers {
     position: sticky;
     left: 0;
 
@@ -84,7 +84,7 @@
     user-select: none;
   }
 
-  & .rraycode_textarea {
+  & .litcode_textarea {
     font: inherit;
     resize: none;
     border: none;
@@ -95,11 +95,11 @@
     background-color: var(--editor-bg-color);
   }
 
-  & .rraycode_textarea::selection {
+  & .litcode_textarea::selection {
     background-color: var(--editor-sel-color);
   }
 
-  & .rraycode_highlight {
+  & .litcode_highlight {
     width: 100%;
     height: 100%;
     color: var(--editor-text-color);
@@ -134,14 +134,14 @@
   }
 }
 
-.rraycode[default] .token.string      { color: var(--hl-color-string);      }
-.rraycode[default] .token.function    { color: var(--hl-color-function);    }
-.rraycode[default] .token.number      { color: var(--hl-color-number);      }
-.rraycode[default] .token.operator    { color: var(--hl-color-operator);    }
-.rraycode[default] .token.class-name  { color: var(--hl-color-class-name);  }
-.rraycode[default] .token.punctuation { color: var(--hl-color-punctuation); }
-.rraycode[default] .token.keyword     { color: var(--hl-color-keyword);     }
-.rraycode[default] .token.comment     { color: var(--hl-color-comment);     }
-.rraycode[default] .token.tag         { color: var(--hl-color-tag);         }
-.rraycode[default] .token.selector    { color: var(--hl-color-selector);    }
-.rraycode[default] .token.property    { color: var(--hl-color-property);    }
+.litcode[default] .token.string      { color: var(--hl-color-string);      }
+.litcode[default] .token.function    { color: var(--hl-color-function);    }
+.litcode[default] .token.number      { color: var(--hl-color-number);      }
+.litcode[default] .token.operator    { color: var(--hl-color-operator);    }
+.litcode[default] .token.class-name  { color: var(--hl-color-class-name);  }
+.litcode[default] .token.punctuation { color: var(--hl-color-punctuation); }
+.litcode[default] .token.keyword     { color: var(--hl-color-keyword);     }
+.litcode[default] .token.comment     { color: var(--hl-color-comment);     }
+.litcode[default] .token.tag         { color: var(--hl-color-tag);         }
+.litcode[default] .token.selector    { color: var(--hl-color-selector);    }
+.litcode[default] .token.property    { color: var(--hl-color-property);    }

@@ -1,7 +1,7 @@
 import { html, LitElement } from 'lit';
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
 import style from './web-site.css';
-import './rray-code.mjs';
+import './lit-code.mjs';
 import * as codeSample from './codeSample.mjs';
 import logo from '../logo.svg';
 import ghLogo from  '../github.svg';
@@ -45,12 +45,12 @@ class WebSite extends LitElement {
           ${this.curLang}
         </div>
 
-        <rray-code
+        <lit-code
           id="editor"
           @update=${this.updateSamples}
           .language=${this.curLang}
           linenumbers
-        ></rray-code>
+        ></lit-code>
       </div>
 
       <hr>

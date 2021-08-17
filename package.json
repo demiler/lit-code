@@ -1,15 +1,15 @@
 {
-  "name": "rray-code",
+  "name": "lit-code",
   "version": "0.0.15",
   "description": "Simple web editor created with web components",
   "license": "MIT",
-  "repository": "demiler/rray-code",
+  "repository": "demiler/lit-code",
   "author": "demiler",
-  "main": "build/rray-code.min.mjs",
-  "module": "build/rray-code.module.mjs",
+  "main": "build/lit-code.min.mjs",
+  "module": "build/lit-code.module.mjs",
   "files": [
-    "build/rray-code.min.mjs",
-    "build/rray-code.module.mjs"
+    "build/lit-code.min.mjs",
+    "build/lit-code.module.mjs"
   ],
   "keywords": [
     "editor",

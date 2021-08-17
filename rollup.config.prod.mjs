@@ -5,19 +5,19 @@ import minifyHTML from 'rollup-plugin-minify-html-literals';
 import { terser } from 'rollup-plugin-terser';
 
 export default {
-  input: 'src/rray-code.mjs',
+  input: 'src/lit-code.mjs',
   output: [
     {
       sourcemap: false,
       format: 'umd',
-      name: 'rray-code',
-      file: 'build/rray-code.min.mjs',
+      name: 'lit-code',
+      file: 'build/lit-code.min.mjs',
     },
     {
       sourcemap: false,
       format: 'es',
-      name: 'rray-code',
-      file: 'build/rray-code.module.mjs',
+      name: 'lit-code',
+      file: 'build/lit-code.module.mjs',
     }
   ],
   plugins: [
