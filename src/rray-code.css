@@ -2,7 +2,7 @@
   display: block;
 }
 
-:host, .rraycode {
+:host {
   height: 100%;
   width: 100%;
   max-height: inherit;
@@ -31,36 +31,15 @@
   --hl-color-punctuation: #4a4a4a;
   --hl-color-keyword:     #8500ff;
   --hl-color-comment:     #aaa;
+  --hl-color-tag:         #3a9bca;
+  --hl-color-selector:    #3a9bca;
+  --hl-color-property:    #713aca;
 
-  & > .rraycode {
-    --font-family: inherit;
-    --font-size: inherit;
-    --line-height: inherit;
-    --lines-width: inherit;
-
-    --editor-bg-color: inherit;
-    --editor-text-color: inherit;
-    --editor-caret-color: inherit;
-    --editor-sel-color: inherit;
-
-    --lines-bg-color: inherit;
-    --lines-text-color: inherit;
-    --scroll-track-color: inherit;
-    --scroll-thumb-color: inherit;
-
-    --hl-color-string:      inherit;
-    --hl-color-function:    inherit;
-    --hl-color-number:      inherit;
-    --hl-color-operator:    inherit;
-    --hl-color-class-name:  inherit;
-    --hl-color-punctuation: inherit;
-    --hl-color-keyword:     inherit;
-    --hl-color-comment:     inherit;
-  }
 }
 
 .rraycode {
   border-radius: inherit;
+  height: 100%;
   max-height: inherit;
   max-width: inherit;
   overflow: auto;
@@ -102,6 +81,7 @@
     color: var(--lines-text-color);
     height: 100%;
     box-sizing: border-box;
+    user-select: none;
   }
 
   & .rraycode_textarea {
@@ -161,4 +141,6 @@
 .rraycode[default] .token.punctuation { color: var(--hl-color-punctuation); }
 .rraycode[default] .token.keyword     { color: var(--hl-color-keyword);     }
 .rraycode[default] .token.comment     { color: var(--hl-color-comment);     }
-
+.rraycode[default] .token.tag         { color: var(--hl-color-tag);         }
+.rraycode[default] .token.selector    { color: var(--hl-color-selector);    }
+.rraycode[default] .token.property    { color: var(--hl-color-property);    }

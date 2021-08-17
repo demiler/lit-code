@@ -6,6 +6,7 @@ import livereload from 'rollup-plugin-livereload';
 import glob from 'glob';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import svg from 'rollup-plugin-svg'
 
 export default {
   input: 'src/index.mjs',
@@ -20,7 +21,6 @@ export default {
       host: 'localhost',
       port: 8080,
     }),
-    livereload({ delay: 200 }),
     postcss({
       inject: false,
     }),
@@ -30,6 +30,7 @@ export default {
     nodeResolve({
       browser: true,
     }),
+    svg(),
     {
       name: 'watch-external',
       buildStart() {

@@ -5,18 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>rray-code</title>
-  <script type="module" src="./rray-code.min.mjs" defer></script>
+  <link rel="modulepreload" href="/index.mjs" as="script">
+  <script type="module" src="/index.mjs" defer></script>
 </head>
 <body>
-<rray-code linenumbers="" language="js" code="function fibonacci(len) {
-  const fib = [0, 1];
-  
-  for (let i = 2; i < len; i++) {
-    fib[i] = fib[i - 2] + fib[i - 1];
-  }
-  return fib;
-}
-
-console.log(fibonacci(10));"></rray-code>
+  <style>
+    body, html { height: 100%; width: 100%; }
+    body { 
+      background-color: #222;
+      margin: 0;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    #editor {
+      border: 2px solid #555;
+      border-radius: 8px;
+      width: 80%;
+      height: 80%;
+      background-color: #444;
+      --editor-bg-color: #444;
+      --lines-bg-color: #333;
+      --lines-text-color: #555;
+      --editor-text-color: white;
+      --hl-color-punctuation: #ddd;
+    }
+  </style>
+  <rray-code id='editor'
+      linenumbers
+    ></rray-code>
 </body>
 </html>
