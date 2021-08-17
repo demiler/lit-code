@@ -2,6 +2,8 @@
 [![Build Status](https://travis-ci.com/Demiler/lit-code.svg?branch=master)](https://travis-ci.com/Demiler/lit-code)
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/lit-code)
 
+![logo](logo.svg)
+
 # lit-code
 Simple browser code editor for small code chunks.  
 Written with web-components and [lit](https://lit.dev/) library.  

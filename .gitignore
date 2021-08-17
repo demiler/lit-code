@@ -5,3 +5,4 @@ Thumbs.db
 dist
 *.bak
 *~
+github\.key*
