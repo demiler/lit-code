@@ -96,6 +96,11 @@ class RrayCode extends LitElement {
     `;
   }
 
+  setCode(code) {
+    this.code = code;
+    this.updateTextarea();
+  }
+
   getCode() {
     return this.code;
   }

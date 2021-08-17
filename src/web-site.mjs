@@ -2,11 +2,11 @@ import { html, LitElement } from 'lit';
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
 import style from './web-site.css';
 import './rray-code.mjs';
+import * as codeSample from './codeSample.mjs';
 import logo from '../logo.svg';
 import ghLogo from  '../github.svg';
 
-const languages = ['atom', 'clike', 'css', 'html', 'js', 'markup', 'mathml', 'rss',
-  'ssml', 'svg', 'xml' ];
+const languages = ['clike', 'css', 'html', 'js' ];
 
 class WebSite extends LitElement {
   static styles = [ style ];
@@ -19,6 +19,12 @@ class WebSite extends LitElement {
     super();
     this.curLang = 'js';
     this.showDropdown = false;
+    this.samples = {};
+    Object.assign(this.samples, codeSample);
+  }
+
+  firstUpdated() {
+    this.shadowRoot.getElementById('editor').setCode(this.samples[this.curLang]);
   }
 
   render() {
@@ -28,26 +34,24 @@ class WebSite extends LitElement {
       </a>
       <div id="header">
         <div id="logo">${unsafeHTML(logo)}</div>
-        <div id="title">lit-code</div>
-      </div>
-
-      <div id="language-select">
-        <div id="current" @click=${this.toggleDropdown}>
-          <span>Selected language:</span>
-          <span>${this.curLang} ▼</span>
-        </div>
-        <div id="list" @mouseout=${this.hideDropdown} ?hidden=${!this.showDropdown}>
-          ${languages.map(lang => html`
-            <span class='lang' data-lang=${lang} @click=${this.chooseLang}>${lang}</span>
-          `)}
+        <div>
+          <div id="title">lit-code</div>
+          <div id="desc">Simple and small web-component code editor</div>
         </div>
       </div>
 
-      <rray-code
-        id="editor"
-        .language=${this.curLang}
-        linenumbers
-      ></rray-code>
+      <div id="editor-wrap">
+        <div id="language" @click=${this.changeLanguage}>
+          ${this.curLang}
+        </div>
+
+        <rray-code
+          id="editor"
+          @update=${this.updateSamples}
+          .language=${this.curLang}
+          linenumbers
+        ></rray-code>
+      </div>
 
       <hr>
 
@@ -64,21 +68,18 @@ class WebSite extends LitElement {
     `;
   }
 
-  hideDropdown(e) {
-    const parent = e.currentTarget;
-    const element = e.toElement || e.relatedTarget;
-    const isChild = parent.contains(element);
-
-    if (!isChild) this.showDropdown = false;
+  updateSamples({ detail: code }) {
+    this.samples[this.curLang] = code;
   }
 
-  toggleDropdown() {
-    this.showDropdown = !this.showDropdown;
-  }
-
-  chooseLang(e) {
-    this.showDropdown = false;
-    this.curLang = e.target.dataset.lang;
+  changeLanguage(e) {
+    let index = languages.indexOf(this.curLang);
+    if (e.shiftKey)
+      index = (index > 0) ? index - 1 : languages.length - 1;
+    else
+      index = (index + 1 < languages.length) ? index + 1 : 0;
+    this.curLang = languages[index];
+    this.shadowRoot.getElementById('editor').setCode(this.samples[this.curLang]);
   }
 };
 

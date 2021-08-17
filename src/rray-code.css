@@ -27,7 +27,7 @@
   --hl-color-function:    #004eff;
   --hl-color-number:      #dd9031;
   --hl-color-operator:    #5a5a5a;
-  --hl-color-class-name:  #78c3ca;
+  --hl-color-class-name:  #3cabb6;
   --hl-color-punctuation: #4a4a4a;
   --hl-color-keyword:     #8500ff;
   --hl-color-comment:     #aaa;
@@ -121,6 +121,7 @@
 
   &::-webkit-scrollbar-track {
     background-color: var(--scroll-track-color);
+    border-radius: 8px;
   }
 
   &::-webkit-scrollbar-thumb {
