@@ -119,7 +119,7 @@
 
 #editor-wrap {
   position: relative;
-  width: 600px;
+  width: 800px;
   height: 400px;
 
   & > #language {
@@ -143,6 +143,7 @@
     border-radius: 8px;
     display: block;
     position: relative;
+    height: inherit;
   }
 
   & > #editor:before {
