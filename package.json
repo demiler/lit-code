@@ -6,11 +6,9 @@
   "repository": "demiler/lit-code",
   "homepage": "https://demiler.github.io/lit-code/",
   "author": "demiler",
-  "main": "build/lit-code.min.mjs",
-  "module": "build/lit-code.module.mjs",
+  "main": "build/lit-code.mjs",
   "files": [
-    "build/lit-code.min.mjs",
-    "build/lit-code.module.mjs"
+    "build/lit-code.mjs"
   ],
   "keywords": [
     "editor",
@@ -20,7 +18,6 @@
     "lit element"
   ],
   "devDependencies": {
-    "lit": "^2.0.0-rc.2",
     "@rollup/plugin-node-resolve": "^13.0.0",
     "chokidar": "^3.5.2",
     "glob": "^7.1.7",
@@ -34,7 +31,8 @@
     "rollup-plugin-postcss-lit": "^1.1.0",
     "rollup-plugin-serve": "^1.1.0",
     "rollup-plugin-svg": "^2.0.0",
-    "rollup-plugin-terser": "^7.0.2"
+    "rollup-plugin-terser": "^7.0.2",
+    "prismjs": "^1.24.1"
   },
   "scripts": {
     "dev": "rollup --watch --config rollup.config.dev.mjs",
@@ -42,6 +40,6 @@
     "site": "rollup --config rollup.config.site.mjs"
   },
   "dependencies": {
-    "prismjs": "^1.24.1"
+    "lit": "^2.0.0-rc.2"
   }
 }
