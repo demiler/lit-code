@@ -25,13 +25,13 @@ function htmlize(el) {
     }</span>`;
 }
 
-class RrayCode extends LitElement {
+class LitCode extends LitElement {
   static styles = [ style ];
   static properties = {
     code:        { type: String },
     grammar:     { type: Object },
     language:    { type: String },
-    noshadow:   { attribute: true },
+    noshadow:    { attribute: true },
     linenumbers: { attribute: true },
   };
 
@@ -89,7 +89,7 @@ class RrayCode extends LitElement {
         `}
 
         <textarea class="litcode_textarea"
-                  spellcheck=false
+                  spellcheck="false"
                   @keydown=${this.handleKeys}
                   @input=${this.handleInput}
         ></textarea>
@@ -274,9 +274,10 @@ class RrayCode extends LitElement {
   handleNewLine(e) {
     e.preventDefault();
     this.insertCode(this.elTextarea.selectionStart, '\n' + this.getCurrentLineIndent());
-    if (this.elTextarea.selectionStart === this.code.length)
+    if (this.elTextarea.selectionStart === this.code.length) {
       this.elContainer.scrollTop = this.elContainer.scrollHeight;
+    }
   }
 }
 
-customElements.define('lit-code', RrayCode);
+customElements.define('lit-code', LitCode);
