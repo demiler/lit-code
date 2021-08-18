@@ -14,7 +14,6 @@ import style from './lit-code.css';
 import 'prismjs';
 
 const IS_PRISM = (typeof Prism !== "undefined");
-console.log(IS_PRISM);
 
 function htmlize(el) {
   if (typeof el === 'string') return html`${el}`;
