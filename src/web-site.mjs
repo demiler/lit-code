@@ -4,7 +4,9 @@ import style from './web-site.css';
 import './lit-code.mjs';
 import * as codeSample from './codeSample.mjs';
 import logo from '../logo.svg';
-import ghLogo from  '../github.svg';
+import ghLogo from  '../github_corner.svg';
+import sun from '../sun.svg';
+import moon from '../moon.svg';
 
 const languages = ['clike', 'css', 'html', 'js' ];
 
@@ -13,6 +15,7 @@ class WebSite extends LitElement {
   static properties = {
     curLang: { type: String },
     showDropdown: { type: Boolean },
+    theme: { type: String },
   };
 
   constructor() {
@@ -21,6 +24,16 @@ class WebSite extends LitElement {
     this.showDropdown = false;
     this.samples = {};
     Object.assign(this.samples, codeSample);
+
+    this.theme =
+      (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
+      ? 'dark'
+      : 'white';
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.setAttribute('theme', this.theme);
   }
 
   firstUpdated() {
@@ -30,8 +43,12 @@ class WebSite extends LitElement {
   render() {
     return html`
       <a id="corner" href="https://github.com/demiler/lit-code">
-        <span id="ghlogo">${unsafeHTML(ghLogo)}</span>
+        ${unsafeHTML(ghLogo)}
       </a>
+      <div id="theme" @click=${this.toggleTheme}>
+        ${unsafeHTML(this.theme === 'dark' ? moon : sun)}
+      </div>
+
       <div id="header">
         <div id="logo">${unsafeHTML(logo)}</div>
         <div>
@@ -66,6 +83,11 @@ class WebSite extends LitElement {
         <div class='card'>Easy to style</div>
       </div>
     `;
+  }
+
+  toggleTheme() {
+    this.theme = (this.theme === 'dark') ? 'white' : 'dark';
+    this.setAttribute('theme', this.theme);
   }
 
   updateSamples({ detail: code }) {

@@ -9,7 +9,7 @@ Simple browser code editor for small code chunks.
 Written with web-components and [lit](https://lit.dev/) library.  
 Inspired by [CodeFlask](https://github.com/kazzkiq/CodeFlask).  
 
-[DEMO](https://ps543.csb.app/)
+[DEMO](https://lit-code.firebaseapp.com/)
 
 ![preview](preview.png)
 
