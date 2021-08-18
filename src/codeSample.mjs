@@ -1,5 +1,6 @@
 export const js = "\
 import { html, css, LitElement } from 'lit';\n\
+import 'prismjs';\n\
 import 'lit-code';\n\
 \n\
 class MyElement extends LitElement {\n\

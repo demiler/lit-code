@@ -25,10 +25,14 @@ class WebSite extends LitElement {
     this.samples = {};
     Object.assign(this.samples, codeSample);
 
-    this.theme =
-      (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
-      ? 'dark'
-      : 'white';
+    this.theme = localStorage.getItem('theme');
+
+    if (this.theme === null) {
+      this.theme =
+        (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
+        ? 'dark'
+        : 'white';
+    }
   }
 
   connectedCallback() {
@@ -88,6 +92,7 @@ class WebSite extends LitElement {
   toggleTheme() {
     this.theme = (this.theme === 'dark') ? 'white' : 'dark';
     this.setAttribute('theme', this.theme);
+    localStorage.setItem('theme', this.theme);
   }
 
   updateSamples({ detail: code }) {
