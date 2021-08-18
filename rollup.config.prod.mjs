@@ -28,9 +28,6 @@ export default {
     postcssLit.default({
       importPackage: 'lit',
     }),
-    nodeResolve({
-      browser: true,
-    }),
     svg(),
     minifyHTML.default({
       options: {
