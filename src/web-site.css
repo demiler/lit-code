@@ -185,6 +185,7 @@
 
 hr {
   border: none;
+  min-height: 5px;
   height: 5px;
   border-radius: 10px;
   background: var(--color-bg-2);

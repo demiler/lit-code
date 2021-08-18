@@ -80,7 +80,7 @@ class WebSite extends LitElement {
         <div class='card'>Great for small code preview</div>
         <div class='card'>Flexible highlight with Prism.js</div>
         <div class='card'>Build as modern web component</div>
-        <div class='card'>Extremely small if you already usign lit</div>
+        <div class='card'>Extremely small if you already using lit</div>
         <div class='card'>Supports auto brackets and quotes closing</div>
         <div class='card'>Keeps your last line indent</div>
         <div class='card'>Inserts indent on new code block</div>
