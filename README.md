@@ -23,14 +23,16 @@ Inspired by [CodeFlask](https://github.com/kazzkiq/CodeFlask).
 ```
 npm i lit-code
 ```
-Requires lit library
+Requires lit library and if you want highlight prismjs aswell.
 
 # Usage
 Import it like this
 ```js
-import 'lit-code'; //as any other package
+import 'prismjs'; //to enable code highlight
+//or import './my-version-of-prism.js'
+import 'lit-code'; //component it self
 ```
-Use it like any other custom element! Bare editor
+Use it like any other custom element!
 ```html
 <lit-code></lit-code>
 ```
@@ -103,8 +105,8 @@ These are default editor and highlight colors but you can spice things up
 by adding your own highlight with your `Prism` pacakge, disabling shadow-dom and
 creating new highlight colorscheme:
 ```js
-import 'lit-code';
 import './my-ver-of-prism-with-cpp.js';
+import 'lit-code';
 ```
 ```html
 <lit-code language='cpp' noshadow></lit-code>
@@ -121,6 +123,7 @@ import './my-ver-of-prism-with-cpp.js';
 # Example
 ```js
 import { html, css, LitElement } from 'lit';
+import 'prismjs';
 import 'lit-code';
 
 class JsCodePlayground extends LitElement {

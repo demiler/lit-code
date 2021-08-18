@@ -13,7 +13,18 @@ import { html, LitElement } from 'lit';
 import style from './lit-code.css';
 import 'prismjs';
 
-const IS_PRISM = (typeof Prism !== undefined);
+const IS_PRISM = (typeof Prism !== "undefined");
+console.log(IS_PRISM);
+
+function htmlize(el) {
+  if (typeof el === 'string') return html`${el}`;
+
+  return html`<span class="token ${el.type} ${el.alias}">${
+    Array.isArray(el.content)
+        ? el.content.map(htmlize)
+        : html`${el.content}`
+    }</span>`;
+}
 
 class RrayCode extends LitElement {
   static styles = [ style ];
@@ -84,19 +95,9 @@ class RrayCode extends LitElement {
                   @input=${this.handleInput}
         ></textarea>
 
-        ${!IS_PRISM ? html`` : html`
-          <code class="litcode_highlight"><pre>
-            ${Prism.tokenize(this.code, this.grammar).map(function htmlize(el) {
-              if (typeof el === 'string') return html`${el}`;
-
-              return html`<span class="token ${el.type} ${el.alias}">${
-                Array.isArray(el.content)
-                    ? el.content.map(htmlize)
-                    : html`${el.content}`
-                }</span>`;
-            })}
-          </pre></code>
-        `}
+        <code class="litcode_highlight"><pre>${
+          IS_PRISM ? Prism.tokenize(this.code, this.grammar).map(htmlize) : html`${this.code}`
+        }</pre></code>
       </div>
     `;
   }

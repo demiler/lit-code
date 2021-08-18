@@ -3,7 +3,6 @@ import postcss from 'rollup-plugin-postcss';
 import postcssLit from 'rollup-plugin-postcss-lit';
 import minifyHTML from 'rollup-plugin-minify-html-literals';
 import { terser } from 'rollup-plugin-terser';
-import svg from 'rollup-plugin-svg'
 
 export default {
   input: 'src/lit-code.mjs',
@@ -20,7 +19,6 @@ export default {
     postcssLit.default({
       importPackage: 'lit',
     }),
-    svg(),
     minifyHTML.default({
       options: {
         minifyOptions: {
