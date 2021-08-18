@@ -64,7 +64,9 @@ To get any code updates use `@update` as event listener. That will proved you wi
     }
 ></lit-code>
 ```
-Or you can grab code with `.getCode()`
+Or you can grab code with `.getCode()`  
+
+To set some code at runtime use `.setCode()`.
 
 # Styling
 `lit-code` by default support `js`, `clike`, `html` and `css` hightlight.
