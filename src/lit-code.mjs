@@ -13,6 +13,19 @@ import { html, LitElement } from 'lit';
 import style from './lit-code.css';
 import 'prismjs';
 
+const IS_PRISM = (typeof Prism !== "undefined");
+console.log(IS_PRISM);
+
+function htmlize(el) {
+  if (typeof el === 'string') return html`${el}`;
+
+  return html`<span class="token ${el.type} ${el.alias}">${
+    Array.isArray(el.content)
+        ? el.content.map(htmlize)
+        : html`${el.content}`
+    }</span>`;
+}
+
 class RrayCode extends LitElement {
   static styles = [ style ];
   static properties = {
@@ -34,12 +47,13 @@ class RrayCode extends LitElement {
     this.indent = '  ';
 
     this.language = 'clike';
-    this.grammar = Prism.languages[this.language];
+    if (IS_PRISM)
+      this.grammar = Prism.languages[this.language];
   }
 
   update(params) {
     super.update(params);
-    if (params.has('language')) {
+    if (IS_PRISM && params.has('language')) {
       const newGrammar = Prism.languages[this.language.toLowerCase()];
       if (newGrammar === undefined) {
         throw new Error('Unsupported Prism language');
@@ -81,17 +95,9 @@ class RrayCode extends LitElement {
                   @input=${this.handleInput}
         ></textarea>
 
-        <code class="litcode_highlight"><pre>
-          ${Prism.tokenize(this.code, this.grammar).map(function htmlize(el) {
-            if (typeof el === 'string') return html`${el}`;
-
-            return html`<span class="token ${el.type} ${el.alias}">${
-              Array.isArray(el.content)
-                  ? el.content.map(htmlize)
-                  : html`${el.content}`
-              }</span>`;
-          })}
-        </pre></code>
+        <code class="litcode_highlight"><pre>${
+          IS_PRISM ? Prism.tokenize(this.code, this.grammar).map(htmlize) : html`${this.code}`
+        }</pre></code>
       </div>
     `;
   }

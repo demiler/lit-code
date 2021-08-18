@@ -108,9 +108,6 @@
 
     & > pre {
       margin: 0;
-      /*This is some Voodoo magic to hide wierd offset
-      of the fist line in pre. DO NOT TOUCH*/
-      text-indent: -6em;
     }
   }
 
