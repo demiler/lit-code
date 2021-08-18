@@ -10,7 +10,7 @@ export default {
   output: {
     sourcemap: false,
     format: 'umd',
-    file: 'docs/index.mjs',
+    file: './index.mjs',
   },
   plugins: [
     postcss({
