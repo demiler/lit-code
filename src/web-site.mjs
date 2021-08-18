@@ -3,10 +3,10 @@ import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
 import style from './web-site.css';
 import './lit-code.mjs';
 import * as codeSample from './codeSample.mjs';
-import logo from '../logo.svg';
-import ghLogo from  '../github_corner.svg';
-import sun from '../sun.svg';
-import moon from '../moon.svg';
+import logo from './imgs/logo.svg';
+import ghLogo from  './imgs/github_corner.svg';
+import sun from './imgs/sun.svg';
+import moon from './imgs/moon.svg';
 
 const languages = ['clike', 'css', 'html', 'js' ];
 
