@@ -6,7 +6,7 @@ import 'lit-code';\n\
 class MyElement extends LitElement {\n\
   render() {\n\
     return html`\n\
-      <lit-code linenumbers language='js'></lit-code>\n\
+      <lit-code linenumbers language=\"js\"></lit-code>\n\
     `;\n\
   }\n\
 }\n\
