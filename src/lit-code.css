@@ -90,7 +90,7 @@
     border: none;
     outline: none;
     color: transparent;
-    white-space: nowrap;
+    height: 100%;
     caret-color: var(--editor-caret-color);
     background-color: var(--editor-bg-color);
   }
@@ -127,7 +127,7 @@
   }
 
   &::-webkit-scrollbar-corner {
-    background-color: transparent;
+    background-color: var(--scroll-track-color);
   }
 }
 

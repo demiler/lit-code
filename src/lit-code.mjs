@@ -26,13 +26,18 @@ function htmlize(el) {
 }
 
 class LitCode extends LitElement {
-  static styles = [ style ];
-  static properties = {
-    code:        { type: String },
-    grammar:     { type: Object },
-    language:    { type: String },
-    noshadow:    { attribute: true },
-    linenumbers: { attribute: true },
+  static get styles() {
+    return style;
+  }
+
+  static get properties() {
+    return {
+      code:        { type: String },
+      grammar:     { type: Object },
+      language:    { type: String },
+      noshadow:    { attribute: true },
+      linenumbers: { attribute: true },
+    };
   };
 
   get shadowDom() { return !this.hasAttribute('noshadow'); }
