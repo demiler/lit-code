@@ -1,6 +1,6 @@
 {
   "name": "lit-code",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Simple web editor created with web components",
   "license": "MIT",
   "repository": "demiler/lit-code",
