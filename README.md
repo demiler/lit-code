@@ -11,7 +11,7 @@ Inspired by [CodeFlask](https://github.com/kazzkiq/CodeFlask).
 
 [DEMO](https://demiler.github.io/lit-code/)
 
-![preview](preview.png)
+![preview](preview.svg)
 
 # Features
 + Web component
