@@ -1,6 +1,7 @@
 [![npm version](https://badge.fury.io/js/lit-code.svg)](https://badge.fury.io/js/lit-code)
 [![Build Status](https://travis-ci.com/Demiler/lit-code.svg?branch=master)](https://travis-ci.com/Demiler/lit-code)
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/lit-code)
+[![Bundlephobia gzip size](https://img.shields.io/bundlephobia/minzip/lit-code?label=size)](https://bundlephobia.com/result?p=lit-code)
 
 ![logo](logo.svg)
 
