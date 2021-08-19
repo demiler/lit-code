@@ -121,7 +121,7 @@ import 'lit-code';
 .litcode .token.template { color: yellow; }
 ```
 
-##Pro tip
+## Pro tip
 For easy access to parsed by prismjs words hold `ctrl` + `shift`
 while inspecting highlight with dev tools
 
