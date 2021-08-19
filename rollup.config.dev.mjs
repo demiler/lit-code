@@ -9,7 +9,7 @@ import { fileURLToPath } from 'url';
 import svg from 'rollup-plugin-svg'
 
 export default {
-  input: 'src/lit-code.mjs',
+  input: 'src/index.mjs',
   output: {
     file: 'dist/index.mjs',
     format: 'es'
