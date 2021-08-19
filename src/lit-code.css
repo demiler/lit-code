@@ -89,6 +89,7 @@
     resize: none;
     border: none;
     outline: none;
+    margin: 0;
     color: transparent;
     height: 100%;
     caret-color: var(--editor-caret-color);
