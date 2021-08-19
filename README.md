@@ -72,8 +72,8 @@ Or you can grab code with `.getCode()`
 To set some code at runtime use `.setCode()`.
 
 # Styling
-`lit-code` by default support `js`, `clike`, `html` and `css` hightlight.
-Also `lit-code` keeps it self safe in comfy shadom-dom but you still
+`lit-code` by default (as css vars) support `js`, `clike`, `html` and `css` hightlight.
+Also `lit-code` keeps it self safe in comfy shadom-dom but you can still
 specify various colors to it via css variables:
 ```css
 --font-family: monospace;
@@ -106,7 +106,7 @@ These are default editor and highlight colors but you can spice things up
 by adding your own highlight with your `Prism` pacakge, disabling shadow-dom and
 creating new highlight colorscheme:
 ```js
-import './my-ver-of-prism-with-cpp.js';
+import './my-version-of-prism-with-cpp.js';
 import 'lit-code';
 ```
 ```html
@@ -120,6 +120,10 @@ import 'lit-code';
 .litcode .token.type { color: red; }
 .litcode .token.template { color: yellow; }
 ```
+
+##Pro tip
+For easy access to parsed by prismjs words hold `ctrl` + `shift`
+while inspecting highlight with dev tools
 
 # Example
 ```js
