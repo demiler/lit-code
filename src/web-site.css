@@ -6,6 +6,17 @@
   --color-text: black;
   --color-text-2: #444;
   --color-shadow: #0000002b;
+
+  & #editor {
+    & .token.unit           { color: var(--hl-color-number) }
+    & .token.pseudo-class   { color: #49a948 }
+    & .token.macro > *      { color: #a01e1e }
+    & .token.type           { color: #a01e1e }
+    & .token.doctype *      { color: #aaa !important }
+    & .token.tag *          { color: #3a9bca }
+    & .token.attr-name      { color: #226180 }
+    & .token.attr-value     { color: #c58b31 }
+  }
 }
 
 :host([theme=dark]) {
@@ -19,9 +30,10 @@
     --lines-bg-color: #535353;
     --lines-text-color: #959595;
     --editor-bg-color: #3d3d3d;
-    --editor-text-color: #eaeaea;
+    --editor-text-color: #eee;
+    --editor-caret-color: var(--editor-text-color);
     --editor-sel-color: #565656;
-    --hl-color-punctuation: var(--color-text);
+    --hl-color-punctuation: var(--editor-text-color);
     --hl-color-keyword: #b773e1;
     --hl-color-function: #81a7ff;
     --hl-color-string: #79df79;
@@ -31,6 +43,15 @@
     --hl-color-operator: var(--color-text);
     --scroll-thumb-color: var(--color-bg-2);
     --scroll-track-color: var(--color-bg);
+
+    & .token.unit           { color: var(--hl-color-number) }
+    & .token.pseudo-class   { color: #6fd27b }
+    & .token.macro > *      { color: #ff5a5a }
+    & .token.type           { color: #6dd9e4 }
+    & .token.doctype *      { color: #999 !important }
+    & .token.tag *          { color: #3a9bca }
+    & .token.attr-name      { color: #a6e2ff }
+    & .token.attr-value     { color: #e0a448 }
   }
 
   & #corner svg #bg {

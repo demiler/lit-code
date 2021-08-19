@@ -1,4 +1,5 @@
 import { html, LitElement } from 'lit';
+import './prism.js';
 import './lit-code.mjs';
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
 import style from './web-site.css';
@@ -8,7 +9,7 @@ import ghLogo from  './imgs/github_corner.svg';
 import sun from './imgs/sun.svg';
 import moon from './imgs/moon.svg';
 
-const languages = ['clike', 'css', 'html', 'js' ];
+const languages = ['c', 'css', 'html', 'js' ];
 
 class WebSite extends LitElement {
   static styles = [ style ];
@@ -70,6 +71,7 @@ class WebSite extends LitElement {
           id="editor"
           @update=${this.updateSamples}
           .language=${this.curLang}
+          noshadow
           linenumbers
         ></lit-code>
       </div>

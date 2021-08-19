@@ -11,7 +11,6 @@
 
 import { html, LitElement } from 'lit';
 import style from './lit-code.css';
-import 'prismjs';
 
 const IS_PRISM = (typeof Prism !== "undefined");
 

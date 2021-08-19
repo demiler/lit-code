@@ -1,6 +1,6 @@
 export const js = "\
 import { html, css, LitElement } from 'lit';\n\
-import 'prismjs';\n\
+import './prism.js'; //languages=markup+css+clike+javascript+c+css-extras\n\
 import 'lit-code';\n\
 \n\
 class MyElement extends LitElement {\n\
@@ -46,7 +46,7 @@ button:hover {\n\
 }\
 ';
 
-export const clike = '\
+export const c = '\
 #include <stdio.h>\n\
 \n\
 int main(void) {\n\
