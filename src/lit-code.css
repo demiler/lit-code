@@ -90,6 +90,7 @@
     border: none;
     outline: none;
     margin: 0;
+    white-space: pre;
     color: transparent;
     height: 100%;
     caret-color: var(--editor-caret-color);
