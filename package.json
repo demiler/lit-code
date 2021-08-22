@@ -37,7 +37,7 @@
   "scripts": {
     "dev": "rollup --watch --config rollup.config.dev.mjs",
     "build": "rollup --config rollup.config.prod.mjs",
-    "site": "rollup --config rollup.config.site.mjs"
+    "release": "npm run build; git add build/lit-code*; git commit -m \"build\"; npm version patch; npm publish"
   },
   "dependencies": {
     "lit": "^2.0.0-rc.2"
